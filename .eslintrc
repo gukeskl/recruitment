@@ -14,7 +14,7 @@
     "es6": true,
     "browser": true
   },
-  "plugins": ["@typescript-eslint", "react", "react-hooks"],
+  "plugins": ["@typescript-eslint", "react", "react-hooks", "eslint-plugin-import"],
   "rules": {
     "@typescript-eslint/keyword-spacing": "warn",
     "@typescript-eslint/lines-between-class-members": ["warn", "always", { "exceptAfterSingleLine": true }],
