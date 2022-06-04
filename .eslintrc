@@ -1,0 +1,46 @@
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json",
+    "debugLevel": true
+  },
+  "globals": {
+    "_DEV_": "readonly",
+    "_MOCK_": "readonly"
+  },
+  "extends": ["eslint:recommended", "plugin:@typescript-eslint/recommended", "prettier"],
+  "env": {
+    "jest": true,
+    "es6": true,
+    "browser": true
+  },
+  "plugins": ["@typescript-eslint", "react", "react-hooks"],
+  "rules": {
+    "@typescript-eslint/keyword-spacing": "warn",
+    "@typescript-eslint/lines-between-class-members": ["warn", "always", { "exceptAfterSingleLine": true }],
+    "@typescript-eslint/quotes": ["warn", "single"],
+    "@typescript-eslint/semi": ["warn", "always"],
+    "@typescript-eslint/type-annotation-spacing": 1,
+    "@typescript-eslint/no-use-before-define": "off",
+    "eol-last": ["warn", "always"],
+    "indent": "off",
+    "jsx-quotes": ["warn", "prefer-single"],
+    "no-multiple-empty-lines": ["warn", { "max": 1 }],
+    "no-trailing-spaces": "warn",
+    "object-curly-spacing": ["warn", "always"],
+    "react/jsx-uses-react": "warn",
+    "react/jsx-uses-vars": "warn",
+    "space-before-blocks": ["warn", "always"],
+    "space-infix-ops": "warn",
+    "@typescript-eslint/ban-types": "warn",
+    "@typescript-eslint/ban-ts-comment": "warn",
+    "no-redeclare": "warn",
+    "no-var": "warn",
+    "no-undef": "off",
+    "import/newline-after-import": ["error", { "count": 1 }],
+    "@typescript-eslint/camelcase": "off",
+    "react-hooks/rules-of-hooks": "error",
+    "react-hooks/exhaustive-deps": "warn",
+    "@typescript-eslint/no-unused-vars": "warn"
+  }
+}
