@@ -1,7 +1,11 @@
 import { useDispatch } from 'react-redux';
 import { useAppSelector } from 'store';
-import { addToFavorites, removeFromFavorites } from 'store/slices/favoritesImages';
-import { DogImageUrl } from 'types';
+import {
+  addToFavorites,
+  AddToFavoritesPayload,
+  removeFromFavorites,
+  RemoveFromFavoritesPayload,
+} from 'store/slices/favoritesImages';
 
 export const useStoredFavoritesImages = () => {
   const dispatch = useDispatch();
@@ -9,7 +13,7 @@ export const useStoredFavoritesImages = () => {
 
   return {
     favorites,
-    addToFavorites: (url: DogImageUrl) => dispatch(addToFavorites(url)),
-    removeFromFavorites: (url: DogImageUrl) => dispatch(removeFromFavorites(url)),
+    addToFavorites: (payload: AddToFavoritesPayload) => dispatch(addToFavorites(payload)),
+    removeFromFavorites: (payload: RemoveFromFavoritesPayload) => dispatch(removeFromFavorites(payload)),
   };
 };

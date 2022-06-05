@@ -25,8 +25,8 @@ const BreedPage: React.FC = () => {
             <Card
               imageUrl={url}
               isLikeable={true}
-              isLiked={favorites.some(v => v === url)}
-              onLike={isLiked => (isLiked ? addToFavorites(url) : removeFromFavorites(url))}
+              isLiked={favorites[breed]?.some(v => v === url)}
+              onLike={isLiked => (isLiked ? addToFavorites({ url, breed }) : removeFromFavorites({ url, breed }))}
             />
           </div>
         ))}

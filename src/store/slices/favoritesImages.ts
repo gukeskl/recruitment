@@ -1,23 +1,36 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { DogImageUrl } from 'types';
+import { Breed, DogImageUrl } from 'types';
 
 export type FavoriteDogsImagesState = {
-  favorites: DogImageUrl[];
+  favorites: { [breed: Breed]: DogImageUrl[] };
 };
 
 const initialState: FavoriteDogsImagesState = {
-  favorites: [],
+  favorites: {},
+};
+
+export type AddToFavoritesPayload = {
+  breed: Breed;
+  url: DogImageUrl;
+};
+
+export type RemoveFromFavoritesPayload = {
+  breed: Breed;
+  url: DogImageUrl;
 };
 
 export const favoritesDogsImagesSlice = createSlice({
   name: 'favoritesDogsImages',
   initialState,
   reducers: {
-    addToFavorites: (state, { payload: url }: PayloadAction<DogImageUrl>) => {
-      state.favorites.push(url);
+    addToFavorites: (state, action: PayloadAction<AddToFavoritesPayload>) => {
+      const { breed, url } = action.payload;
+      if (!state.favorites[breed]) state.favorites[breed] = [];
+      state.favorites[breed].push(url);
     },
-    removeFromFavorites: (state, { payload: url }: PayloadAction<DogImageUrl>) => {
-      state.favorites = state.favorites.filter(value => value !== url);
+    removeFromFavorites: (state, action: PayloadAction<RemoveFromFavoritesPayload>) => {
+      const { breed, url } = action.payload;
+      state.favorites[breed] = state.favorites[breed].filter(value => value !== url);
     },
   },
 });

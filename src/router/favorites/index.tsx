@@ -1,20 +1,45 @@
 import { Card } from 'components';
+import { useState } from 'react';
 import { useStoredFavoritesImages } from 'store/hooks/useStoredFavoritesImages';
+
+const SELECT_ALL_OPTION = 'all';
 
 const FavoritesPage: React.FC = () => {
   const { favorites } = useStoredFavoritesImages();
+  const [selectedBreed, setSelectedBreed] = useState<string>(SELECT_ALL_OPTION);
 
-  if (favorites.length === 0) return <div className='container has-text-centered p-4'>NO FAVORITES IMAGES</div>;
+  const breedsThatContainFavorites = Object.entries(favorites)
+    .filter(([, images]) => images.length !== 0)
+    .map(([breed]) => breed);
+
+  const filteredFavoritesImages =
+    selectedBreed === SELECT_ALL_OPTION ? Object.values(favorites).flatMap(urls => urls) : favorites[selectedBreed];
+
+  if (filteredFavoritesImages.length === 0)
+    return <div className='container has-text-centered p-4'>NO FAVORITES IMAGES</div>;
 
   return (
     <div className='container p-4'>
       <div className='level'>
-        <p className='level-item has-text-centered'>
+        <p className='level-item'>
           <strong>Favorites</strong>
+        </p>
+
+        <p className='level-item'>
+          <div className='select'>
+            <select onChange={e => setSelectedBreed(e.target.value)}>
+              <option value={SELECT_ALL_OPTION}>all</option>
+              {breedsThatContainFavorites.map(breed => (
+                <option key={breed} value={breed}>
+                  {breed}
+                </option>
+              ))}
+            </select>
+          </div>
         </p>
       </div>
       <div className='columns is-multiline is-centered'>
-        {favorites.map(url => (
+        {filteredFavoritesImages.map(url => (
           <div key={url} className='column is-one-third is-one-quarter-fullhd'>
             <Card imageUrl={url} />
           </div>
