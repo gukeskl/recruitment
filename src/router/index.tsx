@@ -9,6 +9,7 @@ const { BASE, BREED, FAVORITES } = PATH;
 const Router: React.FC = () => (
   <BrowserRouter>
     <Routes>
+      <Route path='*' element={<BasePage />} />
       <Route path={BASE} element={<BasePage />} />
       <Route path={BREED} element={<BreadPage />} />
       <Route path={FAVORITES} element={<FavoritesPage />} />
