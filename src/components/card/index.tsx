@@ -1,13 +1,13 @@
 import { AiFillHeart } from 'react-icons/ai';
 
 type CardProps = {
-  title: string;
-  imageUrl: string;
+  title?: string;
+  imageUrl?: string;
   isClickable?: boolean;
   onClick?: () => void;
   isLikeable?: boolean;
   isLiked?: boolean;
-  onLike?: () => void;
+  onLike?: (isLiked: boolean) => void;
 };
 
 export const Card: React.FC<CardProps> = ({
@@ -22,23 +22,25 @@ export const Card: React.FC<CardProps> = ({
   <div onClick={onClick} className={`card ${isClickable ? 'is-clickable' : ''}`} style={{ position: 'relative' }}>
     <div className='card-image'>
       <figure className='image is-4by3'>
-        <img src={imageUrl} alt='Placeholder image' />
+        <img src={imageUrl} alt='DOG PHOTO' />
       </figure>
     </div>
-    <div className='card-content'>
-      <div className='media'>
-        <div className='media-content'>
-          <p className='title is-5'>{title}</p>
+    {title && (
+      <div className='card-content'>
+        <div className='media'>
+          <div className='media-content'>
+            <p className='title is-5'>{title}</p>
+          </div>
         </div>
       </div>
-    </div>
+    )}
     {isLikeable && (
       <button
         className='button m-2 p-2'
         style={{ position: 'absolute', right: '0px', top: '0px' }}
         onClick={e => {
           e.stopPropagation();
-          onLike();
+          onLike(!isLiked);
         }}
       >
         <AiFillHeart color={isLiked ? 'pink' : 'grey'} size={30} />
