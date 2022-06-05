@@ -3,14 +3,23 @@ import { AiFillHeart } from 'react-icons/ai';
 type CardProps = {
   title: string;
   imageUrl: string;
+  isClickable?: boolean;
   onClick?: () => void;
   isLikeable?: boolean;
   isLiked?: boolean;
   onLike?: () => void;
 };
 
-export const Card: React.FC<CardProps> = ({ title, imageUrl, isLikeable, isLiked, onClick, onLike = () => null }) => (
-  <div onClick={onClick} className='card is-clickable' style={{ position: 'relative' }}>
+export const Card: React.FC<CardProps> = ({
+  title,
+  imageUrl,
+  isLiked,
+  isClickable,
+  isLikeable,
+  onClick,
+  onLike = () => null,
+}) => (
+  <div onClick={onClick} className={`card ${isClickable ? 'is-clickable' : ''}`} style={{ position: 'relative' }}>
     <div className='card-image'>
       <figure className='image is-4by3'>
         <img src={imageUrl} alt='Placeholder image' />
