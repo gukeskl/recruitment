@@ -4,11 +4,13 @@ import { useStoredBreeds } from 'store/hooks/useStoredBreeds';
 import { useStoredRandomImages } from 'store/hooks/useStoredRandomImages';
 import { PATH } from 'router/paths';
 import { STATUS } from 'types';
+import { useLoadOnScroll } from 'hooks/use-load-on-scroll';
 
 const BasePage: React.FC = () => {
   const navigate = useNavigate();
   const { breeds, breedsStatus } = useStoredBreeds();
-  const { randomImagesUrls } = useStoredRandomImages();
+  const { randomImagesUrls, fetchRandomImagesUrls } = useStoredRandomImages();
+  const visibleBreeds = useLoadOnScroll(breeds, 10, 10, fetchRandomImagesUrls);
 
   if (breedsStatus === STATUS.FETCHING) return <>LOADING</>;
   if (breedsStatus === STATUS.FAILURE) return <>ERROR!</>;
@@ -21,7 +23,7 @@ const BasePage: React.FC = () => {
         </button>
       </div>
       <div className='columns is-multiline is-centered'>
-        {breeds?.map(breed => (
+        {visibleBreeds?.map(breed => (
           <div key={breed} className='column is-one-third is-one-quarter-fullhd'>
             <Card title={breed} imageUrl={randomImagesUrls[breed]} onClick={() => navigate(`/${breed}`)} />
           </div>

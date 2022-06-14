@@ -1,4 +1,5 @@
 import { Card } from 'components';
+import { useLoadOnScroll } from 'hooks/use-load-on-scroll';
 import { useState } from 'react';
 import { useStoredFavoritesImages } from 'store/hooks/useStoredFavoritesImages';
 
@@ -14,6 +15,8 @@ const FavoritesPage: React.FC = () => {
 
   const filteredFavoritesImages =
     selectedBreed === SELECT_ALL_OPTION ? Object.values(favorites).flatMap(urls => urls) : favorites[selectedBreed];
+
+  const visibleFavoritesImages = useLoadOnScroll(filteredFavoritesImages, 10, 10);
 
   if (filteredFavoritesImages.length === 0)
     return <div className='container has-text-centered p-4'>NO FAVORITES IMAGES</div>;
@@ -39,7 +42,7 @@ const FavoritesPage: React.FC = () => {
         </p>
       </div>
       <div className='columns is-multiline is-centered'>
-        {filteredFavoritesImages.map(url => (
+        {visibleFavoritesImages?.map(url => (
           <div key={url} className='column is-one-third is-one-quarter-fullhd'>
             <Card imageUrl={url} />
           </div>

@@ -3,11 +3,15 @@ import { Card } from 'components';
 import { useStoredFavoritesImages } from 'store/hooks/useStoredFavoritesImages';
 import { useStoredBreedImages } from 'store/hooks/useStoredBreedImages';
 import { STATUS } from 'types';
+import { useLoadOnScroll } from 'hooks/use-load-on-scroll';
 
 const BreedPage: React.FC = () => {
   const { breed } = useParams();
   const { imagesUrls, imagesUrlsStatus } = useStoredBreedImages(breed);
+  const breedImagesUrls = breed ? imagesUrls[breed] : null;
   const { favorites, addToFavorites, removeFromFavorites } = useStoredFavoritesImages();
+
+  const visibleBreedsImages = useLoadOnScroll(breedImagesUrls, 10, 10);
 
   if (imagesUrlsStatus === STATUS.FETCHING) return <>LOADING</>;
   if (imagesUrlsStatus === STATUS.FAILURE || !breed) return <>ERROR</>;
@@ -20,7 +24,7 @@ const BreedPage: React.FC = () => {
         </p>
       </div>
       <div className='columns is-multiline is-centered'>
-        {imagesUrls[breed]?.map(url => (
+        {visibleBreedsImages?.map(url => (
           <div key={url} className='column is-one-third is-one-quarter-fullhd'>
             <Card
               imageUrl={url}
